@@ -62,10 +62,12 @@ def kp_detection(db, nnet, result_dir, debug=False, decode_func=kp_decode):
         os.makedirs(debug_dir)
 
     if db.split != "trainval":
-        db_inds = db.db_inds[:100] if debug else db.db_inds
+        db_inds = db.db_inds[:17] if debug else db.db_inds[:17] # 17 custom images only
+        print(db_inds)
     else:
         db_inds = db.db_inds[:100] if debug else db.db_inds[:5000]
     num_images = db_inds.size
+    print(num_images)
 
     K             = db.configs["top_k"]
     ae_threshold  = db.configs["ae_threshold"]
@@ -86,11 +88,20 @@ def kp_detection(db, nnet, result_dir, debug=False, decode_func=kp_decode):
     top_bboxes = {}
     for ind in tqdm(range(0, num_images), ncols=80, desc="locating kps"):
         db_ind = db_inds[ind]
-
-        image_id   = db.image_ids(db_ind)
-        image_file = db.image_file(db_ind)
-        image      = cv2.imread(image_file)
-
+        print(db_ind)
+        #image_id   = db.image_ids(db_ind)
+        #print(image_id)
+        #image_file = db.image_file(db_ind)
+        image_file = os.path.join(system_configs.data_dir, "coco", "images", "testdev2017", "{}").format("00000000000" + str(db_ind + 1) + ".jpg")
+        if db_ind < 9:
+        	image_id   = "00000000000" + str(db_ind + 1) + ".jpg"
+        	image_file = os.path.join(system_configs.data_dir, "coco", "images", "testdev2017", "{}").format("00000000000" + str(db_ind + 1) + ".jpg")
+        elif db_ind >= 9 and db_ind < 99:
+        	image_id   = "0000000000" + str(db_ind + 1) + ".jpg"
+        	image_file = os.path.join(system_configs.data_dir, "coco", "images", "testdev2017", "{}").format("0000000000" + str(db_ind + 1) + ".jpg")
+        print(image_id)
+        print(image_file)
+        image = cv2.imread(image_file)
         height, width = image.shape[0:2]
 
         detections = []
