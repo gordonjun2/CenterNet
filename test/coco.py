@@ -303,7 +303,7 @@ def kp_detection(db, nnet, result_dir, debug=False, decode_func=kp_decode):
                 n = -1
                 for bbox in top_bboxes[image_id][j][keep_inds]:
                   n = n + 1  
-                  print(top_bboxes[image_id][j][keep_inds][n][4])  
+                  #print(top_bboxes[image_id][j][keep_inds][n][4])  
                   bbox  = bbox[0:4].astype(np.int32)
                   xmin     = bbox[0]
                   ymin     = bbox[1]
