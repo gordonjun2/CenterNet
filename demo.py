@@ -40,6 +40,7 @@ def show_video(video_file, nnet):
     frame_count = -1
     while cap.isOpened():
         ret, frame = cap.read()
+        print(frame
         if ret:
             frame_count += 1
 
@@ -64,7 +65,7 @@ def show_video(video_file, nnet):
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser("Demo for thurs")
+    parser = argparse.ArgumentParser("Demo")
     parser.add_argument("-f", "--file_dir", help="video file path")
     parser.add_argument("-w", "--weight_path", help="weight file path")
     args = parser.parse_args()

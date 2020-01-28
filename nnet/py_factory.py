@@ -42,7 +42,7 @@ class NetworkFactory(object):
         self.model   = DummyModule(nnet_module.model(db))
         self.loss    = nnet_module.loss
         self.network = Network(self.model, self.loss)
-        self.network = DataParallel(self.network, chunk_sizes=system_configs.chunk_sizes).cuda()
+        #self.network = DataParallel(self.network, chunk_sizes=system_configs.chunk_sizes).cuda()
 
         total_params = 0
         for params in self.model.parameters():
@@ -65,8 +65,11 @@ class NetworkFactory(object):
         else:
             raise ValueError("unknown optimizer")
 
-    def cuda(self):
-        self.model.cuda()
+    #def cuda(self):
+    #    self.model.cuda()
+
+    def cpu(self):
+    	self.model.cpu()
 
     def train_mode(self):
         self.network.train()
@@ -96,8 +99,8 @@ class NetworkFactory(object):
 
     def validate(self, xs, ys, **kwargs):
         with torch.no_grad():
-            xs = [x.cuda(non_blocking=True) for x in xs]
-            ys = [y.cuda(non_blocking=True) for y in ys]
+            #xs = [x.cuda(non_blocking=True) for x in xs]
+            #ys = [y.cuda(non_blocking=True) for y in ys]
 
             loss_kp = self.network(xs, ys)
             loss       = loss_kp[0]
@@ -110,7 +113,7 @@ class NetworkFactory(object):
 
     def test(self, xs, **kwargs):
         with torch.no_grad():
-            xs = [x.cuda(non_blocking=True) for x in xs]
+            #xs = [x.cuda(non_blocking=True) for x in xs]
             return self.model(*xs, **kwargs)
 
     def set_lr(self, lr):

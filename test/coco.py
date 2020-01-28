@@ -62,8 +62,7 @@ def kp_detection(db, nnet, result_dir, debug=False, decode_func=kp_decode):
         os.makedirs(debug_dir)
 
     if db.split != "trainval":
-        db_inds = db.db_inds[:17] if debug else db.db_inds[:17] # 17 custom images only
-        print(db_inds)
+        db_inds = db.db_inds if debug else db.db_inds
     else:
         db_inds = db.db_inds[:100] if debug else db.db_inds[:5000]
     num_images = db_inds.size
@@ -92,13 +91,14 @@ def kp_detection(db, nnet, result_dir, debug=False, decode_func=kp_decode):
         #image_id   = db.image_ids(db_ind)
         #print(image_id)
         #image_file = db.image_file(db_ind)
-        image_file = os.path.join(system_configs.data_dir, "coco", "images", "testdev2017", "{}").format("00000000000" + str(db_ind + 1) + ".jpg")
-        if db_ind < 9:
-        	image_id   = "00000000000" + str(db_ind + 1) + ".jpg"
-        	image_file = os.path.join(system_configs.data_dir, "coco", "images", "testdev2017", "{}").format("00000000000" + str(db_ind + 1) + ".jpg")
-        elif db_ind >= 9 and db_ind < 99:
-        	image_id   = "0000000000" + str(db_ind + 1) + ".jpg"
-        	image_file = os.path.join(system_configs.data_dir, "coco", "images", "testdev2017", "{}").format("0000000000" + str(db_ind + 1) + ".jpg")
+        image_file = os.path.join(system_configs.data_dir, "coco", "images", "test", "{}").format("image" + str(db_ind + 1) + ".jpg")
+        image_id   = "image" + str(db_ind + 1) + ".jpg"
+        #if db_ind < 9:
+        #	image_id   = "00000000000" + str(db_ind + 1) + ".jpg"
+        #	image_file = os.path.join(system_configs.data_dir, "coco", "images", "val2017", "{}").format("" + str(db_ind + 1) + ".jpg")
+        #elif db_ind >= 9 and db_ind < 99:
+        #	image_id   = "0000000000" + str(db_ind + 1) + ".jpg"
+        #	image_file = os.path.join(system_configs.data_dir, "coco", "images", "val2017", "{}").format("0000000000" + str(db_ind + 1) + ".jpg")
         print(image_id)
         print(image_file)
         image = cv2.imread(image_file)
@@ -298,8 +298,12 @@ def kp_detection(db, nnet, result_dir, debug=False, decode_func=kp_decode):
             #bboxes = {}
             for j in range(1, categories + 1):
                 keep_inds = (top_bboxes[image_id][j][:, -1] >= 0.4)
+                #print(top_bboxes[image_id][j][-1])
                 cat_name  = db.class_name(j)
+                n = -1
                 for bbox in top_bboxes[image_id][j][keep_inds]:
+                  n = n + 1  
+                  print(top_bboxes[image_id][j][keep_inds][n][4])  
                   bbox  = bbox[0:4].astype(np.int32)
                   xmin     = bbox[0]
                   ymin     = bbox[1]
@@ -308,12 +312,12 @@ def kp_detection(db, nnet, result_dir, debug=False, decode_func=kp_decode):
                   #if (xmax - xmin) * (ymax - ymin) > 5184:
                   ax.add_patch(plt.Rectangle((xmin, ymin),xmax - xmin, ymax - ymin, fill=False, edgecolor= colours[j-1], 
                                linewidth=4.0))
-                  ax.text(xmin+1, ymin-3, '{:s}'.format(cat_name), bbox=dict(facecolor= colours[j-1], ec='black', lw=2,alpha=0.5),
+                  ax.text(xmin+1, ymin-3, '{:s}: {:f}'.format(cat_name, top_bboxes[image_id][j][keep_inds][n][4]), bbox=dict(facecolor= colours[j-1], ec='black', lw=2,alpha=0.5),
                           fontsize=15, color='white', weight='bold')
 
-            debug_file1 = os.path.join(debug_dir, "{}.pdf".format(db_ind))
+            #debug_file1 = os.path.join(debug_dir, "{}.pdf".format(db_ind))
             debug_file2 = os.path.join(debug_dir, "{}.jpg".format(db_ind))
-            plt.savefig(debug_file1)
+            #plt.savefig(debug_file1)
             plt.savefig(debug_file2)
             plt.close()
             #cv2.imwrite(debug_file, image, [int(cv2.IMWRITE_JPEG_QUALITY), 100])

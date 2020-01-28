@@ -56,7 +56,8 @@ def test(db, split, testiter, debug=False, suffix=None):
     test_file = "test.{}".format(db.data)
     testing = importlib.import_module(test_file).testing
 
-    nnet.cuda()
+    #nnet.cpu()     # Uncomment if using cpu
+    nnet.cuda()     # Comment if using cpu
     nnet.eval_mode()
     testing(db, nnet, result_dir, debug=debug)
 
