@@ -1,3 +1,31 @@
+#~~~~~~~~~~~~~~~~~~~~Extra README~~~~~~~~~~~~~~~~~~~~#
+
+Follow the instruction below normally if you are not using OpenCV in any way.
+
+If you are using OpenCV, ensure that the PyTorch version (0.4.1) is installed in this environment.
+
+Steps:
+1. Once your "CenterNet" environment is created as shown below, install OpenCV using:
+	conda install -c anaconda opencv
+
+   If error (inconsistent environment) is shown, ignore and wait until you can update your packages. Type "y" to continue.
+   Note that this step will cause PyTorch to downgrade to 0.4.0.
+
+2. Update PyTorch 0.4.0 to 0.4.1 using:
+	conda install pytorch==0.4.1 -c pytorch
+
+3. When using video_demo.py for video inference, install seaborn and imageio using:
+	conda install -c anaconda seaborn
+	conda install -c anaconda imageio
+
+   If you face an OpenCV Error (cv2.imshow not implemented), install:
+	pip install opencv-contrib-python
+
+4. Done and enjoy CenterNet
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+
+
 # [CenterNet: Keypoint Triplets for Object Detection](https://arxiv.org/abs/1904.08189)
 by [Kaiwen Duan](https://scholar.google.com/citations?hl=zh-CN&user=TFHRaZUAAAAJ&scilu=&scisig=AMD79ooAAAAAXLv9_7ddy26i4c6z5n9agk05m97faUdN&gmla=AJsN-F78W-h98Pb2H78j6lTKbjdn0fklhe2X_8CCPqRU2fC4KJEIbllhD2c5F0irMR3zDiehKt_SH26N2MHI1HlUMw6qRba9HMbiP3vnQfJqD82FrMAPdlU&sciund=10706678259143520926&gmla=AJsN-F5cOpNUdnI6YrZ9joRa6JE2nP6wFKU1GKVkNIfCmmgjk431Lg2BYCS6wn5WWZxdnzBjLfaUwdUJtvPXo53vfoOQoTGP5fHh2X0cCssVtXm8BI4PaM3_oQvKYtCx7o1wivIt1l49sDK6AZPvHLMxxPbC4GbZ1Q&sciund=10445692451499027349), [Song Bai](http://songbai.site/), [Lingxi Xie](http://lingxixie.com/Home.html), [Honggang Qi](http://people.ucas.ac.cn/~hgqi), [Qingming Huang](https://scholar.google.com/citations?user=J1vMnRgAAAAJ&hl=zh-CN) and [Qi Tian](https://scholar.google.com/citations?user=61b6eYkAAAAJ&hl=zh-CN)
 
