@@ -17,7 +17,7 @@ class Drawer(object):
         self.font = font
         self.fontScale = 1
         self.fontThickness = 1
-        self.indFontScale = self.fontScale * 2.5
+        self.indFontScale = self.fontScale * 0.5
         self.indFontThickness = self.fontThickness * 2
         self.indTextSize = cv2.getTextSize(text=str(
             '1'), fontFace=self.font, fontScale=self.indFontScale, thickness=self.indFontThickness)[0]
@@ -114,6 +114,25 @@ class Drawer(object):
             cv2.putText(frameDC, text, (l+5, b-10), self.font, self.fontScale, _color, self.fontThickness)
         return frameDC
 
+    def draw_dets_video(self, frame, dets, infer_time, color=None, label=''):
+        if dets is None or len(dets) == 0:
+            return frame
+        #if color is None:
+            #color = self.color
+        frameDC = copy.deepcopy(frame)
+        self._put_label(frameDC, label)
+        infer_text = 'Inference Time per Frame: {:0.2f} ms'.format(infer_time * 1000)
+        for i, det in enumerate(dets):
+            _color = self.color_palette[i%8]
+            l, t, w, h = int(det["bbox"][0]), int(det["bbox"][1]), int(det["bbox"][2]), int(det["bbox"][3])
+            r = l + w - 1
+            b = t + h - 1
+            text = '{}: {:0.2f}%'.format(det["category_id"], det["score"]*100)
+            cv2.rectangle(frameDC, (l, t), (r, b), _color, 2)
+            cv2.putText(frameDC, text, (l+5, b-10), self.font, self.indFontScale, _color, self.fontThickness)    
+        cv2.putText(frameDC, infer_text, (10, 30), self.font, self.fontScale * 0.75, (0, 0, 255), self.indFontThickness) 
+        return frameDC
+
     def draw_bb_name(self, frame, bb, name, color=None, label=''):
         if color is None:
             color = self.color
@@ -138,6 +157,6 @@ if __name__ == "__main__":
     # bbs = od.detect_ltwh('000000466319.jpg', classes=['car'], buffer=0.3)
     # img_with_bb = drawer.draw_bbs(imageio.imread('000000466319.jpg'), [[199.02, 86.78, 135.59, 339.53]])
     #img_with_bb_det = drawer.draw_dets(imageio.imread('000000000013.jpg'), [('person', 0.51, (156.64, 568.61, 335.65, 706.84))])
-    img_with_bb_det = drawer.draw_dets(frame, )
+    #img_with_bb_det = drawer.draw_dets(frame, )
     plt.imshow(img_with_bb_det)
     plt.show()
