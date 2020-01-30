@@ -7,20 +7,24 @@ Follow the original instruction below if you are not using OpenCV in any way.
 If you are using OpenCV, ensure that the PyTorch version (0.4.1) is installed in this environment.
 
 Steps to get OpenCV working:
+
 **1.** Once your "CenterNet" environment is created as shown below, install OpenCV using:
+
   ```
 	conda install -c anaconda opencv
   ```
 
-   If error (inconsistent environment) is shown, ignore and wait until you can update your packages. Type "y" to continue.
-   Note that this step will cause PyTorch to downgrade to 0.4.0.
+  If error (inconsistent environment) is shown, ignore and wait until you can update your packages. Type "y" to continue.
+  Note that this step will cause PyTorch to downgrade to 0.4.0.
 
 **2.** Update PyTorch 0.4.0 to 0.4.1 using:
+
   ```
 	conda install pytorch==0.4.1 -c pytorch
   ```
 
 **3.** When using video_demo.py for video inference, install seaborn and imageio using:
+
   ```
 	conda install -c anaconda seaborn
 	conda install -c anaconda imageio
@@ -34,23 +38,27 @@ Steps to get OpenCV working:
 ## Real-Time Video Objection Detection Using CenterNet
 
 **1.** Activate CenterNet Environment
+
 **2.** To do real-time inference on a video, use:
-    ```
-    python video_demo.py --model <Select your model> --testiter <Enter '480000' if using pretrained model> --file <./path/to/video.mp4> --score <Remove bboxes based on this score> <--save>
-    ```
 
-    Example:
-    ```
-    python video_demo.py --model CenterNet-104 --testiter 480000 --file road.mp4 --score 0.5 --save
-    ```    
+  ```
+  python video_demo.py --model <Select your model> --testiter <Enter '480000' if using pretrained model> --file <./path/to/video.mp4> --score <Remove bboxes based on this score> <--save>
+  ```
 
-    ###### Tips
-    **->** Available models to use are: 'CenterNet-104' (More accurate but slower in inference) and 'CenterNet-52' (Less accurate but faster in inference)
-    **->** Use '480000' in --testiter if you are using the pretrained model. Enter another value if your pretrained model was trained under that no. of iterations
-    **->** Bboxes are kept or removed based on the score indicated in --score. The value should be 0 <= score >= 1. For example, if '--score 0.5' is used, then bboxes with confidence scores less than 0.5 will not be shown at the output.
-    **->** Use '--save' if you want to save each recorded frame into .jpg images. The images will be saved under CenterNet/Video_Frames/To_Convert/.
+  Example:
+
+  ```
+  python video_demo.py --model CenterNet-104 --testiter 480000 --file road.mp4 --score 0.5 --save
+  ```    
+
+  Tips:
+  -> Available models to use are: 'CenterNet-104' (More accurate but slower in inference) and 'CenterNet-52' (Less accurate but faster in inference)
+  -> Use '480000' in --testiter if you are using the pretrained model. Enter another value if your pretrained model was trained under that no. of iterations
+  -> Bboxes are kept or removed based on the score indicated in --score. The value should be 0 <= score >= 1. For example, if '--score 0.5' is used, then bboxes with confidence scores less than 0.5 will not be shown at the output.
+  -> Use '--save' if you want to save each recorded frame into .jpg images. The images will be saved under CenterNet/Video_Frames/To_Convert/.
 
 **3.** If you typed '--save' to save the recorded frames, you may also want to convert the frames into a video (no lag but it's not real-time). Do not rename the images. With the images already saved in the CenterNet/Video_Frames/To_Convert/ folder, enter CenterNet/Video_Frames and type the command:
+
     ```
     python frames_to_video.py
     ```
