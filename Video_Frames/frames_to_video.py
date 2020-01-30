@@ -9,7 +9,7 @@ def convert_frames_to_video(pathIn,pathOut,fps):
     files = [f for f in os.listdir(pathIn) if isfile(join(pathIn, f))]
  
     #for sorting the file names properly
-    files.sort(key = lambda x: int(x[5:-4]))
+    files = sorted(files, key=lambda x: int(os.path.splitext(x)[0]))
  
     for i in range(len(files)):
         filename=pathIn + files[i]
@@ -31,7 +31,7 @@ def convert_frames_to_video(pathIn,pathOut,fps):
 def main():
     pathIn= './To_Convert/'
     pathOut = 'converted_video.mp4'
-    fps = 100
+    fps = 20
     convert_frames_to_video(pathIn, pathOut, fps)
  
 if __name__=="__main__":
