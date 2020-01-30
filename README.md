@@ -1,8 +1,8 @@
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Extra README~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+# Extra Instructions!
 
 Follow the original instruction below if you are not using OpenCV in any way.
 
-##### OpenCV Installation Notes #####
+## OpenCV Installation Notes
 
 If you are using OpenCV, ensure that the PyTorch version (0.4.1) is installed in this environment.
 
@@ -31,21 +31,20 @@ Steps to get OpenCV working:
 
 4. Done and enjoy CenterNet!
 
-###################################
-
-###### Real-Time Video Objection Detection Using CenterNet #####
+## Real-Time Video Objection Detection Using CenterNet
 
 1. Activate CenterNet Environment
 2. To do real-time inference on a video, use:
     ```
     python video_demo.py --model <Select your model> --testiter <Enter '480000' if using pretrained model> --file <./path/to/video.mp4> --score <Remove bboxes based on this score> <--save>
     ```
-    ```
+
     Example:
+    ```
     python video_demo.py --model CenterNet-104 --testiter 480000 --file road.mp4 --score 0.5 --save
     ```    
 
-    ## Tips
+    ###### Tips
     -> Available models to use are: 'CenterNet-104' (More accurate but slower in inference) and 'CenterNet-52' (Less accurate but faster in inference)
     -> Use '480000' in --testiter if you are using the pretrained model. Enter another value if your pretrained model was trained under that no. of iterations
     -> Bboxes are kept or removed based on the score indicated in --score. The value should be 0 <= score >= 1. For example, if '--score 0.5' is used, then bboxes with confidence scores less than 0.5 will not be shown at the output.
@@ -59,11 +58,6 @@ Steps to get OpenCV working:
 4. The converted video will be generated in the same directory.
 
 5. Done and enjoy CenterNet!
-
-################################################################
-
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
-
 
 # [CenterNet: Keypoint Triplets for Object Detection](https://arxiv.org/abs/1904.08189)
 by [Kaiwen Duan](https://scholar.google.com/citations?hl=zh-CN&user=TFHRaZUAAAAJ&scilu=&scisig=AMD79ooAAAAAXLv9_7ddy26i4c6z5n9agk05m97faUdN&gmla=AJsN-F78W-h98Pb2H78j6lTKbjdn0fklhe2X_8CCPqRU2fC4KJEIbllhD2c5F0irMR3zDiehKt_SH26N2MHI1HlUMw6qRba9HMbiP3vnQfJqD82FrMAPdlU&sciund=10706678259143520926&gmla=AJsN-F5cOpNUdnI6YrZ9joRa6JE2nP6wFKU1GKVkNIfCmmgjk431Lg2BYCS6wn5WWZxdnzBjLfaUwdUJtvPXo53vfoOQoTGP5fHh2X0cCssVtXm8BI4PaM3_oQvKYtCx7o1wivIt1l49sDK6AZPvHLMxxPbC4GbZ1Q&sciund=10445692451499027349), [Song Bai](http://songbai.site/), [Lingxi Xie](http://lingxixie.com/Home.html), [Honggang Qi](http://people.ucas.ac.cn/~hgqi), [Qingming Huang](https://scholar.google.com/citations?user=J1vMnRgAAAAJ&hl=zh-CN) and [Qi Tian](https://scholar.google.com/citations?user=61b6eYkAAAAJ&hl=zh-CN)

@@ -1,10 +1,8 @@
 #To ignore
-#Video_Frames/
-#cache/
-#results/
-#data/
-#models/
-#db/
-#utils/
+Video_Frames/To_Convert/
+cache/
+results/
+data/
+utils/
 
 
