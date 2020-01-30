@@ -56,7 +56,7 @@ class MSCOCO(DETECTION):
             82, 84, 85, 86, 87, 88, 89, 90
         ]
         self._classes = {
-            ind + 1: cat_id for ind, cat_id in enumerate(self._cat_ids)
+            ind + 1: cat_id for ind, cat_id in enumerate(cat_ids)
         }
         self._coco_to_class_map = {
             value: key for key, value in self._classes.items()
