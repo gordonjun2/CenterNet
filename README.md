@@ -52,16 +52,20 @@ Steps to get OpenCV working:
   ```    
 
   Tips:
+
   -> Available models to use are: 'CenterNet-104' (More accurate but slower in inference) and 'CenterNet-52' (Less accurate but faster in inference)
+
   -> Use '480000' in --testiter if you are using the pretrained model. Enter another value if your pretrained model was trained under that no. of iterations
+
   -> Bboxes are kept or removed based on the score indicated in --score. The value should be 0 <= score >= 1. For example, if '--score 0.5' is used, then bboxes with confidence scores less than 0.5 will not be shown at the output.
+
   -> Use '--save' if you want to save each recorded frame into .jpg images. The images will be saved under CenterNet/Video_Frames/To_Convert/.
 
 **3.** If you typed '--save' to save the recorded frames, you may also want to convert the frames into a video (no lag but it's not real-time). Do not rename the images. With the images already saved in the CenterNet/Video_Frames/To_Convert/ folder, enter CenterNet/Video_Frames and type the command:
 
-    ```
-    python frames_to_video.py
-    ```
+  ```
+  python frames_to_video.py
+  ```
 
 **4.** The converted video will be generated in the same directory.
 
