@@ -286,6 +286,8 @@ def kp_detection(db, nnet, result_dir, debug=False, decode_func=kp_decode):
                 keep_inds = (top_bboxes[image_id][j][:, -1] >= thresh)
                 top_bboxes[image_id][j] = top_bboxes[image_id][j][keep_inds]
 
+        #print(top_bboxes)
+
         if debug:
             image_file = db.image_file(db_ind)
             image      = cv2.imread(image_file)
