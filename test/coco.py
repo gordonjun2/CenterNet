@@ -87,20 +87,16 @@ def kp_detection(db, nnet, result_dir, debug=False, decode_func=kp_decode):
     top_bboxes = {}
     for ind in tqdm(range(0, num_images), ncols=80, desc="locating kps"):
         db_ind = db_inds[ind]
-        print(db_ind)
-        #image_id   = db.image_ids(db_ind)
-        #print(image_id)
-        #image_file = db.image_file(db_ind)
-        image_file = os.path.join(system_configs.data_dir, "coco", "images", "test", "{}").format("image" + str(db_ind + 1) + ".jpg")
-        image_id   = "image" + str(db_ind + 1) + ".jpg"
-        #if db_ind < 9:
-        #	image_id   = "00000000000" + str(db_ind + 1) + ".jpg"
-        #	image_file = os.path.join(system_configs.data_dir, "coco", "images", "val2017", "{}").format("" + str(db_ind + 1) + ".jpg")
-        #elif db_ind >= 9 and db_ind < 99:
-        #	image_id   = "0000000000" + str(db_ind + 1) + ".jpg"
-        #	image_file = os.path.join(system_configs.data_dir, "coco", "images", "val2017", "{}").format("0000000000" + str(db_ind + 1) + ".jpg")
-        print(image_id)
-        print(image_file)
+        image_id   = db.image_ids(db_ind)               # Comment if running on custom images
+        image_file = db.image_file(db_ind)              # Comment if running on custom images
+
+        ##### Uncomment to run on custom images #####
+
+        #image_file = os.path.join(system_configs.data_dir, "coco", "images", "test", "{}").format("image" + str(db_ind + 1) + ".jpg")
+        #image_id   = "image" + str(db_ind + 1) + ".jpg"
+
+        #############################################
+
         image = cv2.imread(image_file)
         height, width = image.shape[0:2]
 
