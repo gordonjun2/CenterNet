@@ -256,6 +256,8 @@ def train(training_dbs, validation_db, validation_db_2, tb, suffix, cfg_file, es
             #print(epoch)
 
             if iteration % epoch == 0:     # Enter every epoch
+                print("\n##############################################################################")
+                print("Doing full validation to generate mAP and mAR... Taking a break from training.\n")
                 nnet.eval_mode()
                 stats = kp_detection_train(validation_db_2, nnet, result_dir)
                 map_avg = stats[0]
@@ -283,6 +285,8 @@ def train(training_dbs, validation_db, validation_db_2, tb, suffix, cfg_file, es
                 tb.add_scalar('mAR (Area = Medium) vs Epoch', mar_medium, epoch)
                 tb.add_scalar('mAR (Area = Large) vs Epoch', mar_large, epoch)
                 nnet.train_mode()
+                print("\nFull validation is completed. Continue to train again..")
+                print("##############################################################################")
 
             if es and early_stopping.early_stop:
                 print("Early stopping")

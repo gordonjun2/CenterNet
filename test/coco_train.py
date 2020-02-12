@@ -314,7 +314,7 @@ def kp_detection_train(db, nnet, result_dir, debug=False, decode_func=kp_decode)
 
     cls_ids   = list(range(1, categories + 1))
     image_ids = [db.image_ids(ind) for ind in db_inds]
-    _, _, stats = db.evaluate(result_json, cls_ids, image_ids)
+    stats = db.evaluate(result_json, cls_ids, image_ids)
     return stats
 
 def testing(db, nnet, result_dir, debug=False):
