@@ -1,11 +1,12 @@
 {
     "system": {
         "dataset": "MSCOCO",
-        "batch_size": 48, 
+        "batch_size": 2,
         "sampling_function": "kp_detection",
 
         "train_split": "trainval",
         "val_split": "minival",
+        "val_split_2": "val",
 
         "learning_rate": 0.00025,
         "decay_rate": 10,
@@ -19,9 +20,13 @@
         "stepsize": 450000,
         "snapshot": 5000,
 
-        "chunk_sizes": [6,6,6,6,6,6,6,6],
+        "chunk_sizes": [2],
 
-        "data_dir": "./data"
+        "data_dir": "./data",
+
+        "pull_weight": 1e-1,
+        "push_weight": 1e-1,
+        "regr_weight": 1
     },
     
     "db": {

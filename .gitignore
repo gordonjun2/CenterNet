@@ -3,6 +3,5 @@ Video_Frames/To_Convert/
 cache/
 results/
 data/
-utils/
-
-
+**/__pycache__/
+*.pyc

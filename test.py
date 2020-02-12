@@ -82,7 +82,7 @@ if __name__ == "__main__":
 
     split = {
         "training": train_split,
-        "validation": val_split,
+        "validation": val_split_2,
         "testing": test_split
     }[args.split]
 
