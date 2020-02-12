@@ -19,8 +19,6 @@ from nnet.py_factory import NetworkFactory
 from torch.multiprocessing import Process, Queue, Pool
 from db.datasets import datasets
 
-from models.CenterNet_52 import model_52
-from models.CenterNet_104 import model_104
 from models.py_utils.kp import kp
 from tensorboardX import SummaryWriter       # importing tensorboard
 from torch.utils.data import DataLoader
