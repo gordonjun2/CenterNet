@@ -29,7 +29,6 @@ import cv2
 import time
 from utils.early_stopping import EarlyStopping
 from test.coco_video import kp_detection
-#import imageio
 from test.coco_train import kp_detection_train
 
 torch.backends.cudnn.enabled   = True

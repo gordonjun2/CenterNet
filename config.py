@@ -24,6 +24,9 @@ class Config:
         self._configs["pretrain"]          = None
         self._configs["opt_algo"]          = "adam"
         self._configs["chunk_sizes"]       = None
+        self._configs["pull_weight"]       = 1e-1
+        self._configs["push_weight"]       = 1e-1
+        self._configs["regr_weight"]       = 1 
 
         # Directories
         self._configs["data_dir"]   = "data"
@@ -34,6 +37,7 @@ class Config:
         # Split
         self._configs["train_split"] = "trainval"
         self._configs["val_split"]   = "minival"
+        self._configs["val_split_2"]   = "val"
         self._configs["test_split"]  = "testdev"
 
         # Rng
@@ -171,6 +175,22 @@ class Config:
         if not os.path.exists(self._configs["cache_dir"]):
             os.makedirs(self._configs["cache_dir"])
         return self._configs["cache_dir"]
+
+    @property
+    def pull_weight(self):
+        return self._configs["pull_weight"]
+
+    @property
+    def push_weight(self):
+        return self._configs["push_weight"]
+
+    @property
+    def regr_weight(self):
+        return self._configs["regr_weight"]
+
+    @property
+    def val_split_2(self):
+        return self._configs["val_split_2"]
 
     def update_config(self, new):
         for key in new:
