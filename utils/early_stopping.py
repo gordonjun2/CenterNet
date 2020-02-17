@@ -50,11 +50,12 @@ class EarlyStopping:
             print(f'Validation loss decreased ({self.val_loss_min:.6f} --> {val_loss:.6f}).  Saving model ...')
         #torch.save(model.state_dict(), 'checkpoint.pt')
         
-        dirPath = "../cache/nnet" + str(cfg_file) + "/"
+        dirPath = "cache/nnet" + str(cfg_file) + "/"
         fileList = os.listdir(dirPath)
         
         for fileName in fileList:           # To remove all other files in the cache directory that are saved during training (Save space)
-            os.remove(dirPath + "/" + fileName)
+            if fileName.endswith('.pkl'):
+                os.remove(dirPath + fileName)
         
         nnet.save_params(iteration)
         self.val_loss_min = val_loss

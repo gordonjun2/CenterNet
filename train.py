@@ -27,6 +27,7 @@ import cv2
 import time
 from utils.early_stopping import EarlyStopping
 from test.coco_video import kp_detection
+#import imageio
 from test.coco_train import kp_detection_train
 
 torch.backends.cudnn.enabled   = True
@@ -157,7 +158,7 @@ def train(training_dbs, validation_db, validation_db_2, tb, suffix, cfg_file, es
         nnet.set_lr(learning_rate)
 
     if es:
-        early_stopping = EarlyStopping(patience=30, verbose=True)
+        early_stopping = EarlyStopping(patience=100, verbose=True)
 
     print("training start...")
     nnet.cuda()
@@ -198,7 +199,7 @@ def train(training_dbs, validation_db, validation_db_2, tb, suffix, cfg_file, es
     ##################################
 
     result_dir = system_configs.result_dir
-    result_dir = os.path.join(result_dir, str("Training_Validation"), str("val2017"), str(suffix))      # Use MSCOCO 2017 for Validation in Training
+    result_dir = os.path.join(result_dir, str("Training_Validation"), str("val2017"), str(suffix))
 
     #if suffix is not None:
     #    result_dir = os.path.join(result_dir, suffix)
@@ -254,8 +255,6 @@ def train(training_dbs, validation_db, validation_db_2, tb, suffix, cfg_file, es
             #print(epoch)
 
             if iteration % epoch == 0:     # Enter every epoch
-                print("\n##############################################################################")
-                print("Doing full validation to generate mAP and mAR... Taking a break from training.\n")
                 nnet.eval_mode()
                 stats = kp_detection_train(validation_db_2, nnet, result_dir)
                 map_avg = stats[0]
@@ -283,8 +282,6 @@ def train(training_dbs, validation_db, validation_db_2, tb, suffix, cfg_file, es
                 tb.add_scalar('mAR (Area = Medium) vs Epoch', mar_medium, epoch)
                 tb.add_scalar('mAR (Area = Large) vs Epoch', mar_large, epoch)
                 nnet.train_mode()
-                print("\nFull validation is completed. Continue to train again..")
-                print("##############################################################################")
 
             if es and early_stopping.early_stop:
                 print("Early stopping")
@@ -315,12 +312,12 @@ if __name__ == "__main__":
     with open(cfg_file, "r") as f:
         configs = json.load(f)
 
-    if args.cfg_file == "CenterNet-104":
+    if "CenterNet-104" in args.cfg_file:
         suffix = 104
-    elif args.cfg_file == "CenterNet-52":
+    elif "CenterNet-52" in args.cfg_file:
         suffix = 52
     else:
-        print("~~~~~ Haha, you typed the model incorrectly! ~~~~~")
+        suffix = None
             
     configs["system"]["snapshot_name"] = args.cfg_file
     system_configs.update_config(configs["system"])
