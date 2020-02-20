@@ -8,7 +8,7 @@
         "val_split": "minival",
         "val_split_2": "val",
 
-        "learning_rate": 0.00025,
+        "learning_rate": 0.000225,
         "decay_rate": 10,
 
         "val_iter": 500,
@@ -18,15 +18,15 @@
 
         "max_iter": 480000,
         "stepsize": 450000,
-        "snapshot": 5,
+        "snapshot": 5000,
 
         "chunk_sizes": [2],
 
         "data_dir": "./data",
 
         "pull_weight": 1e-1,
-        "push_weight": 1e-1,
-        "regr_weight": 1
+        "push_weight": 0.9e-1,
+        "regr_weight": 0.9
     },
     
     "db": {
