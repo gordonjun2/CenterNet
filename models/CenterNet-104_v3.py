@@ -5,6 +5,8 @@ from .py_utils import AELoss, _neg_loss, convolution, residual#, kp
 from .py_utils.kp_v3 import kp
 from .py_utils import TopPool, BottomPool, LeftPool, RightPool
 
+from config import system_configs
+
 class pool(nn.Module):
     def __init__(self, dim, pool1, pool2):
         super(pool, self).__init__()
@@ -142,4 +144,4 @@ class model(kp):
             kp_layer=residual, cnv_dim=256
         )
 
-loss = AELoss(pull_weight=1e-1, push_weight=1e-1, focal_loss=_neg_loss)
+loss = AELoss(pull_weight=system_configs.pull_weight, push_weight=system_configs.push_weight, regr_weight=system_configs.regr_weight, focal_loss=_neg_loss)
