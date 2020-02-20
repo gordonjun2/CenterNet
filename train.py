@@ -82,7 +82,7 @@ def make_dirs(directories):
         if not os.path.exists(directory):
             os.makedirs(directory)
 
-def train(training_dbs, validation_db, validation_db_2, tb, suffix, cfg_file, es, start_iter=0):
+def train(training_dbs, validation_db, validation_db_2, tb, suffix, cfg_file, es, start_iter):
     learning_rate    = system_configs.learning_rate
     max_iteration    = system_configs.max_iter
     pretrained_model = system_configs.pretrain
@@ -161,8 +161,8 @@ def train(training_dbs, validation_db, validation_db_2, tb, suffix, cfg_file, es
         early_stopping = EarlyStopping(patience=100, verbose=True)
 
     print("training start...")
-    nnet.cuda()
-    #nnet.cpu()
+    #nnet.cuda()
+    nnet.cpu()
 
     #if suffix == 104:
     #    net = model_104(training_dbs[0])
@@ -269,18 +269,18 @@ def train(training_dbs, validation_db, validation_db_2, tb, suffix, cfg_file, es
                 mar_small = stats[9]
                 mar_medium = stats[10]
                 mar_large = stats[11]
-                tb.add_scalar('Average mAP vs Epoch', map_avg, epoch)
-                tb.add_scalar('mAP (IoU 0.5) vs Epoch', map_50, epoch)
-                tb.add_scalar('mAP (IoU 0.75) vs Epoch', map_75, epoch)
-                tb.add_scalar('mAP (Area = Small) vs Epoch', map_small, epoch)
-                tb.add_scalar('mAP (Area = Medium) vs Epoch', map_medium, epoch)
-                tb.add_scalar('mAP (Area = Large) vs Epoch', map_large, epoch)
-                tb.add_scalar('mAR (Max Detection = 1) vs Epoch', mar_1, epoch)
-                tb.add_scalar('mAR (Max Detection = 10) vs Epoch', mar_10, epoch)
-                tb.add_scalar('mAR (Max Detection = 100) vs Epoch', mar_100, epoch)
-                tb.add_scalar('mAR (Area = Small) vs Epoch', mar_small, epoch)
-                tb.add_scalar('mAR (Area = Medium) vs Epoch', mar_medium, epoch)
-                tb.add_scalar('mAR (Area = Large) vs Epoch', mar_large, epoch)
+                tb.add_scalar('Average mAP vs Epoch', map_avg, iteration/epoch)
+                tb.add_scalar('mAP (IoU 0.5) vs Epoch', map_50, iteration/epoch)
+                tb.add_scalar('mAP (IoU 0.75) vs Epoch', map_75, iteration/epoch)
+                tb.add_scalar('mAP (Area = Small) vs Epoch', map_small, iteration/epoch)
+                tb.add_scalar('mAP (Area = Medium) vs Epoch', map_medium, iteration/epoch)
+                tb.add_scalar('mAP (Area = Large) vs Epoch', map_large, iteration/epoch)
+                tb.add_scalar('mAR (Max Detection = 1) vs Epoch', mar_1, iteration/epoch)
+                tb.add_scalar('mAR (Max Detection = 10) vs Epoch', mar_10, iteration/epoch)
+                tb.add_scalar('mAR (Max Detection = 100) vs Epoch', mar_100, iteration/epoch)
+                tb.add_scalar('mAR (Area = Small) vs Epoch', mar_small, iteration/epoch)
+                tb.add_scalar('mAR (Area = Medium) vs Epoch', mar_medium, iteration/epoch)
+                tb.add_scalar('mAR (Area = Large) vs Epoch', mar_large, iteration/epoch)
                 nnet.train_mode()
 
             if es and early_stopping.early_stop:
@@ -341,7 +341,7 @@ if __name__ == "__main__":
     print("db config...")
     pprint.pprint(training_dbs[0].configs)
 
-    tb = SummaryWriter(comment=' Model = <Default>, batch_size = ' + str(system_configs.batch_size) +
+    tb = SummaryWriter(comment=' Model = <' + str(args.cfg_file) + '>, batch_size = ' + str(system_configs.batch_size) +
                         ', learning_rate = ' + str(system_configs.learning_rate) +
                         ', decay_rate = ' + str(system_configs.decay_rate) + 
                         ', pull_weight = ' + str(system_configs.pull_weight) + 
