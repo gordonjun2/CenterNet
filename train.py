@@ -161,8 +161,8 @@ def train(training_dbs, validation_db, validation_db_2, tb, suffix, cfg_file, es
         early_stopping = EarlyStopping(patience=100, verbose=True)
 
     print("training start...")
-    #nnet.cuda()
-    nnet.cpu()
+    nnet.cuda()
+    #nnet.cpu()
 
     #if suffix == 104:
     #    net = model_104(training_dbs[0])
