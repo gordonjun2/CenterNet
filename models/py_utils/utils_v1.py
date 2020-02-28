@@ -41,11 +41,11 @@ class residual(nn.Module):                  # 2 Skip Connections to 3 Skip Conne
         self.relu1 = nn.ReLU(inplace=True)
 
         self.conv2 = nn.Conv2d(out_dim, out_dim, (3, 3), padding=(1, 1), bias=False)
-        self.bn1   = nn.BatchNorm2d(out_dim)
+        self.bn2   = nn.BatchNorm2d(out_dim)
         self.relu2 = nn.ReLU(inplace=True)
 
         self.conv3 = nn.Conv2d(out_dim, out_dim, (3, 3), padding=(1, 1), bias=False)
-        self.bn2   = nn.BatchNorm2d(out_dim)
+        self.bn3   = nn.BatchNorm2d(out_dim)
         
         self.skip  = nn.Sequential(
             nn.Conv2d(inp_dim, out_dim, (1, 1), stride=(stride, stride), bias=False),
@@ -60,9 +60,13 @@ class residual(nn.Module):                  # 2 Skip Connections to 3 Skip Conne
 
         conv2 = self.conv2(relu1)
         bn2   = self.bn2(conv2)
+        relu2 = self.relu2(bn2)
+
+        conv3 = self.conv3(relu2)
+        bn3 = self.bn3(conv3)
 
         skip  = self.skip(x)
-        return self.relu(bn2 + skip)
+        return self.relu(bn3 + skip)
 
 def make_layer(k, inp_dim, out_dim, modules, layer=convolution, **kwargs):
     layers = [layer(k, inp_dim, out_dim, **kwargs)]
