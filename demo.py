@@ -16,6 +16,43 @@ from test.coco_video import kp_detection
 from nnet.py_factory_video import NetworkFactory        # Import CenterNet Model
 from db.detection_video import db_configs               # Import 'db' parameters
 
+image_ext = ['jpg', 'jpeg', 'png', 'webp']
+video_ext = ['mp4', 'mov', 'avi', 'mkv']
+
+def show_image(image_file, nnet, drawer, score_min, save = False):
+
+    if os.path.isdir(image_file):
+      image_names = []
+      ls = os.listdir(image_file)
+      for file_name in sorted(ls):
+          ext = file_name[file_name.rfind('.') + 1:].lower()
+          if ext in image_ext:
+              image_names.append(os.path.join(image_file, file_name))
+    else:
+      image_names = [image_file]
+    
+    count = 0
+    for (image_name) in image_names:
+        img = cv2.imread(image_name)
+        start_time = time.time()
+        detections = kp_detection(img, nnet, score_min)
+        end_time = time.time()
+        infer_time = end_time - start_time
+        print("Inference Time:" + str(infer_time) + "s")
+
+        img_det = drawer.draw_dets_video(img, detections, infer_time)
+
+        cv2.imshow("Image with detections", img_det)
+
+        count = count + 1
+
+        if save:
+            cv2.imwrite('./result_images/result_' + str(count) + '.jpg', img_det)
+
+        cv2.waitKey(0)
+
+        if cv2.waitKey(25) & 0xFF == ord("q"):
+            cv2.destroyAllWindows()
 
 def show_video(video_file, nnet, drawer, score_min, save = False):                                # , debug): <--- UNTESTED (Another way of adding bboxes)
 
@@ -111,4 +148,7 @@ if __name__ == "__main__":
     nnet.cuda()                                                                 # Comment if using cpu
     nnet.eval_mode()
 
-    show_video(args.file_dir, nnet, drawer, args.score_min, args.save)                     # , args.debug) <--- UNTESTED (Another way of adding bboxes)
+    if args.file_dir[args.file_dir.rfind('.') + 1:].lower() in video_ext:
+        show_video(args.file_dir, nnet, drawer, args.score_min, args.save)
+    else:
+        show_image(args.file_dir, nnet, drawer, args.score_min, args.save)
