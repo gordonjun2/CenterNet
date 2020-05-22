@@ -29,8 +29,8 @@ def convert_frames_to_video(pathIn,pathOut,fps):
     out.release()
  
 def main():
-    pathIn= './To_Convert/'
-    pathOut = 'converted_video.mp4'
+    pathIn= '/home/coffeemix/Desktop/Gordon/CenterTrack/data/kitti_tracking/data_tracking_image_2/testing/image_02/0009/'
+    pathOut = '/home/coffeemix/Desktop/kitti_test_0009.mp4'
     fps = 20
     convert_frames_to_video(pathIn, pathOut, fps)
  
